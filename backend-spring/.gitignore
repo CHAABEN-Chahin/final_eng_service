@@ -1,0 +1,12 @@
+target/
+*.class
+*.jar
+*.war
+.idea/
+*.iml
+.DS_Store
+
+# Environment
+.env
+src/main/resources/.env
+src/main/resources/.env.properties
