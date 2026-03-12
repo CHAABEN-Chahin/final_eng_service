@@ -1,0 +1,30 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+
+  &.with-sidebar {
+    .main-content {
+      margin-left: 260px;
+      width: calc(100% - 260px);
+    }
+  }
+}
+
+.main-content {
+  flex: 1;
+  padding: 0;
+  transition: margin-left 0.3s ease;
+
+  &.full-width {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-layout.with-sidebar .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}

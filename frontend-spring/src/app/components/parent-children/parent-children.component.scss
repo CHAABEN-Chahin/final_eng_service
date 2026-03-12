@@ -1,0 +1,50 @@
+.page { min-height: 100vh; background: #f8fafc; }
+
+.children-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.child-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  .child-avatar {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #059669, #0891b2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 auto 12px;
+  }
+
+  h3 { font-size: 18px; color: #1e293b; margin-bottom: 4px; }
+  p { font-size: 14px; color: #6b7280; }
+
+  .espace-btn {
+    margin-top: 12px;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #059669, #0891b2);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    }
+  }
+}

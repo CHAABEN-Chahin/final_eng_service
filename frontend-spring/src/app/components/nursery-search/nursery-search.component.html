@@ -1,0 +1,97 @@
+<div class="search-page">
+  <div class="page-header">
+    <div class="header-content">
+      <h1>🔍 Chercher une garderie</h1>
+      <p>Trouvez la garderie idéale pour votre enfant</p>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" [(ngModel)]="searchCity" placeholder="Rechercher par ville..."
+               (keyup.enter)="applyFilters()">
+        <button class="btn btn-primary search-btn" (click)="applyFilters()">Rechercher</button>
+      </div>
+      <button class="btn btn-outline filter-toggle" (click)="showFilters = !showFilters">
+        🎛️ Filtres
+      </button>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters card" *ngIf="showFilters">
+      <div class="filter-row">
+        <div class="form-group">
+          <label>Prix maximum (DT)</label>
+          <input type="number" [(ngModel)]="maxPrice" placeholder="Ex: 500">
+        </div>
+        <div class="form-group">
+          <label>Note minimum</label>
+          <select [(ngModel)]="minRating">
+            <option [value]="0">Toutes les notes</option>
+            <option [value]="1">1★ et plus</option>
+            <option [value]="2">2★ et plus</option>
+            <option [value]="3">3★ et plus</option>
+            <option [value]="4">4★ et plus</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-actions">
+        <button class="btn btn-primary" (click)="applyFilters()">Appliquer</button>
+        <button class="btn btn-secondary" (click)="resetFilters()">Réinitialiser</button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-header">
+      <span>{{ filteredNurseries.length }} résultat(s) trouvé(s)</span>
+    </div>
+
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+
+    <div class="nursery-grid" *ngIf="!isLoading">
+      <div class="nursery-card" *ngFor="let nursery of filteredNurseries" (click)="viewDetails(nursery.id)">
+        <div class="nursery-card-top">
+          <div class="nursery-avatar-lg">{{ nursery.name.charAt(0) }}</div>
+          <div class="nursery-main-info">
+            <h3>{{ nursery.name }}</h3>
+            <p class="address">📍 {{ nursery.address }}{{ nursery.city ? ', ' + nursery.city : '' }}</p>
+            <div class="rating-row">
+              <span class="star">{{ getStars(nursery.rating) }}</span>
+              <span class="review-count">({{ nursery.reviewCount }} avis)</span>
+            </div>
+          </div>
+        </div>
+        <div class="nursery-card-details">
+          <div class="detail-item">
+            <span class="detail-label">Prix</span>
+            <span class="detail-value price">{{ nursery.price }} DT/mois</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Places</span>
+            <span class="detail-value">{{ nursery.availableSpots }}/{{ nursery.totalSpots }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Horaires</span>
+            <span class="detail-value">{{ nursery.hours }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Âge</span>
+            <span class="detail-value">{{ nursery.ageRange }}</span>
+          </div>
+        </div>
+        <div class="nursery-card-actions">
+          <button class="btn btn-primary btn-sm">Voir les détails →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!isLoading && filteredNurseries.length === 0">
+      <span class="icon">🔍</span>
+      <h3>Aucune garderie trouvée</h3>
+      <p>Essayez de modifier vos critères de recherche</p>
+    </div>
+  </div>
+</div>

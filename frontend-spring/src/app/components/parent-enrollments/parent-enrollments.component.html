@@ -1,0 +1,33 @@
+<div class="page">
+  <div class="page-header">
+    <h1>📋 Mes Inscriptions</h1>
+    <p>Suivez l'état de vos inscriptions</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <div class="enrollments-list" *ngIf="enrollments.length > 0">
+        <div class="enrollment-card" *ngFor="let enrollment of enrollments">
+          <div class="enrollment-header">
+            <h3>{{ enrollment.nurseryName || enrollment.nursery_name || 'Garderie' }}</h3>
+            <span class="badge" [ngClass]="getStatusBadge(enrollment.status)">
+              {{ getStatusLabel(enrollment.status) }}
+            </span>
+          </div>
+          <div class="enrollment-details">
+            <p><strong>Enfant:</strong> {{ enrollment.childName || enrollment.child_name }}</p>
+            <p><strong>Date début:</strong> {{ enrollment.startDate || enrollment.start_date }}</p>
+            <p *ngIf="enrollment.medicalNotes || enrollment.medical_notes">
+              <strong>Notes médicales:</strong> {{ enrollment.medicalNotes || enrollment.medical_notes }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="empty-state" *ngIf="enrollments.length === 0">
+        <span class="icon">📋</span>
+        <h3>Aucune inscription</h3>
+        <p>Vous n'avez pas encore inscrit d'enfant</p>
+      </div>
+    </ng-container>
+  </div>
+</div>

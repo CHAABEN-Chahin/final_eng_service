@@ -1,0 +1,102 @@
+<div class="page">
+  <div class="page-header">
+    <button class="back-btn" (click)="goBack()">← Retour</button>
+    <h1>📖 Journal de {{ childName }}</h1>
+    <p>Suivez le quotidien de votre enfant à la garderie</p>
+  </div>
+
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+
+    <ng-container *ngIf="!isLoading">
+
+      <!-- HERO CARD: AI Summary -->
+      <div class="hero-card">
+        <div class="hero-icon">✨</div>
+        <ng-container *ngIf="todayLog?.aiSummary">
+          <h2>Résumé de la journée</h2>
+          <p class="ai-summary">{{ todayLog!.aiSummary }}</p>
+        </ng-container>
+        <ng-container *ngIf="!todayLog?.aiSummary && todayLog">
+          <h2>Journée enregistrée</h2>
+          <p class="ai-summary placeholder">Les éducateurs ont rempli les observations d'aujourd'hui. Le résumé intelligent sera bientôt disponible ! ✨</p>
+        </ng-container>
+        <ng-container *ngIf="!todayLog">
+          <h2>En attente...</h2>
+          <p class="ai-summary placeholder">Les éducateurs sont encore occupés avec les enfants ! Revenez plus tard pour le résumé de la journée. 🏫</p>
+        </ng-container>
+      </div>
+
+      <!-- VISUAL STATS: Today's scores -->
+      <div class="stats-card" *ngIf="todayLog">
+        <h2 class="section-title">📊 Indicateurs du jour</h2>
+
+        <div class="stat-row" *ngFor="let dim of allScoreDimensions">
+          <div class="stat-icon">{{ dim.key === 'mood' ? getMoodEmoji(getScoreValue(todayLog, dim.key)) : dim.icon }}</div>
+          <div class="stat-info">
+            <span class="stat-label">{{ dim.label }}</span>
+            <div class="stat-bar-bg">
+              <div class="stat-bar-fill"
+                   [style.width.%]="getScorePercent(getScoreValue(todayLog, dim.key))"
+                   [style.background]="getScoreColor(getScoreValue(todayLog, dim.key))"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tags for today -->
+        <div class="today-tags" *ngIf="todayLog.tags?.length">
+          <div class="tag-pill" *ngFor="let tag of todayLog.tags">
+            {{ getTagLabel(tag) }}
+          </div>
+        </div>
+
+        <!-- Today's remarks -->
+        <div class="today-remarks" *ngIf="todayLog.remarks">
+          <p class="remarks-label">💬 Note de l'éducateur</p>
+          <p class="remarks-text">{{ todayLog.remarks }}</p>
+        </div>
+      </div>
+
+      <!-- TIMELINE: Previous logs -->
+      <div class="timeline-section" *ngIf="previousLogs.length > 0">
+        <h2 class="section-title">📅 Historique</h2>
+
+        <div class="timeline">
+          <div class="timeline-item" *ngFor="let log of previousLogs">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-date">{{ formatDate(log.date) }}</div>
+
+              <!-- AI Summary if available -->
+              <p class="timeline-summary" *ngIf="log.aiSummary">{{ log.aiSummary }}</p>
+
+              <!-- Scores row -->
+              <div class="timeline-scores">
+                <span class="mini-score" *ngFor="let dim of allScoreDimensions">
+                  {{ dim.key === 'mood' ? getMoodEmoji(getScoreValue(log, dim.key)) : dim.icon }} {{ getScoreValue(log, dim.key) }}/5
+                </span>
+              </div>
+
+              <!-- Tags -->
+              <div class="timeline-tags" *ngIf="log.tags?.length">
+                <span class="mini-tag" *ngFor="let tag of log.tags">{{ getTagLabel(tag) }}</span>
+              </div>
+
+              <!-- Remarks -->
+              <p class="timeline-remarks" *ngIf="log.remarks">
+                💬 {{ log.remarks }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div class="empty-state" *ngIf="!todayLog && previousLogs.length === 0">
+        <span class="icon">📖</span>
+        <h3>Aucune observation pour le moment</h3>
+        <p>Les premières observations apparaîtront ici dès que les éducateurs commenceront à les enregistrer.</p>
+      </div>
+    </ng-container>
+  </div>
+</div>

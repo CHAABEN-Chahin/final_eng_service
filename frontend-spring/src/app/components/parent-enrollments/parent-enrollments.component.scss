@@ -1,0 +1,26 @@
+.page { min-height: 100vh; background: #f8fafc; }
+
+.enrollments-list {
+  display: grid;
+  gap: 16px;
+}
+
+.enrollment-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  .enrollment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    h3 { font-size: 16px; font-weight: 600; }
+  }
+
+  .enrollment-details {
+    p { font-size: 14px; color: #6b7280; margin-bottom: 4px; }
+  }
+}

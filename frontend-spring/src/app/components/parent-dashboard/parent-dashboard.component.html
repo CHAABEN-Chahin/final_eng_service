@@ -1,0 +1,113 @@
+<div class="dashboard">
+  <div class="page-header">
+    <div class="header-content">
+      <div>
+        <h1>Bienvenue, {{ userName }} ! 👋</h1>
+        <p>Voici un aperçu de vos activités</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-outline header-btn" (click)="navigateToNotifications()">
+          🔔 Notifications
+          <span class="notif-count" *ngIf="unreadNotifications > 0">{{ unreadNotifications }}</span>
+        </button>
+        <button class="btn btn-outline header-btn" (click)="navigateToChat()">
+          💬 Messages
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading">
+      <div class="spinner"></div>
+    </div>
+
+    <ng-container *ngIf="!isLoading">
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <button class="action-card" (click)="navigateToSearch()">
+          <span class="action-icon">🔍</span>
+          <span>Chercher une garderie</span>
+        </button>
+        <button class="action-card" (click)="navigateToChildren()">
+          <span class="action-icon">👶</span>
+          <span>Mes Enfants ({{ children.length }})</span>
+        </button>
+        <button class="action-card" (click)="navigateToEnrollments()">
+          <span class="action-icon">📋</span>
+          <span>Mes Inscriptions</span>
+        </button>
+        <button class="action-card" (click)="navigateToPayments()">
+          <span class="action-icon">💳</span>
+          <span>Paiements</span>
+        </button>
+        <button class="action-card" (click)="navigateToReviews()">
+          <span class="action-icon">⭐</span>
+          <span>Avis</span>
+        </button>
+      </div>
+
+      <!-- Enrolled Nurseries -->
+      <div class="section">
+        <h2 class="section-title">🏢 Garderies Inscrites</h2>
+        <div class="nursery-cards" *ngIf="enrolledNurseries.length > 0">
+          <div class="nursery-card" *ngFor="let nursery of enrolledNurseries">
+            <div class="nursery-card-header">
+              <div class="nursery-avatar">{{ nursery.name?.charAt(0) || 'G' }}</div>
+              <div class="nursery-info">
+                <h3>{{ nursery.name || nursery.nursery_name }}</h3>
+                <span class="rating">
+                  <span class="star">{{ getStars(nursery.rating || nursery.average_rating || 0) }}</span>
+                  ({{ nursery.reviewCount || nursery.review_count || 0 }} avis)
+                </span>
+              </div>
+            </div>
+            <div class="nursery-card-body">
+              <p *ngIf="nursery.childName || nursery.child_name"><strong>Enfant:</strong> {{ nursery.childName || nursery.child_name }}</p>
+              <p *ngIf="nursery.address">📍 {{ nursery.address }}</p>
+            </div>
+            <div class="nursery-card-actions">
+              <button class="btn btn-secondary btn-sm" (click)="viewNurseryDetails(nursery.id || nursery.nursery_id)">Voir Détails</button>
+              <button class="btn btn-outline btn-sm" (click)="contactNursery(nursery.id || nursery.nursery_id)">Contacter</button>
+            </div>
+          </div>
+        </div>
+        <div class="empty-state" *ngIf="enrolledNurseries.length === 0">
+          <span class="icon">🏢</span>
+          <h3>Aucune inscription</h3>
+          <p>Cherchez une garderie pour inscrire votre enfant</p>
+          <button class="btn btn-primary" (click)="navigateToSearch()">Chercher une garderie</button>
+        </div>
+      </div>
+
+      <!-- Today's Program -->
+      <div class="section" *ngIf="todayProgram.length > 0">
+        <h2 class="section-title">📅 Programme du jour</h2>
+        <div class="program-list">
+          <div class="program-item" *ngFor="let program of todayProgram">
+            <div class="program-time">{{ program.timeSlot || program.time_slot || program.heure || '' }}</div>
+            <div class="program-content">
+              <h4>{{ program.activityName || program.activity || program.activite || '' }}</h4>
+              <p>{{ program.description || program.nursery_name || '' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Reviews -->
+      <div class="section" *ngIf="recentReviews.length > 0">
+        <h2 class="section-title">⭐ Avis récents</h2>
+        <div class="review-list">
+          <div class="review-item" *ngFor="let review of recentReviews">
+            <div class="review-header">
+              <span class="star">{{ getStars(review.rating) }}</span>
+              <span class="review-date">{{ review.date || review.created_at }}</span>
+            </div>
+            <p class="review-comment">{{ review.comment }}</p>
+            <span class="review-author">— {{ review.parent_name || review.parentName }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

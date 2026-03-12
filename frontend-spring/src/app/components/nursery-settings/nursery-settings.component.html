@@ -1,0 +1,51 @@
+<div class="page">
+  <div class="page-header">
+    <h1>⚙️ Paramètres</h1>
+    <p>Gérez les paramètres de votre profil et garderie</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <div class="success-message" *ngIf="successMessage">✅ {{ successMessage }}</div>
+
+      <div class="settings-card card">
+        <h3>Profil utilisateur</h3>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" [(ngModel)]="userName">
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="tel" [(ngModel)]="userPhone">
+        </div>
+        <button class="btn btn-primary" (click)="saveProfile()" [disabled]="isSaving">
+          {{ isSaving ? 'Enregistrement...' : 'Enregistrer' }}
+        </button>
+      </div>
+
+      <div class="settings-card card" *ngIf="nursery">
+        <h3>Informations de la garderie</h3>
+        <div class="info-row">
+          <span class="info-label">Nom:</span>
+          <span class="info-value">{{ nursery.name }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Adresse:</span>
+          <span class="info-value">{{ nursery.address }}, {{ nursery.city }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Prix mensuel:</span>
+          <span class="info-value">{{ nursery.price }} DT</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Places:</span>
+          <span class="info-value">{{ nursery.availableSpots }} / {{ nursery.totalSpots }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Horaires:</span>
+          <span class="info-value">{{ nursery.hours }}</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

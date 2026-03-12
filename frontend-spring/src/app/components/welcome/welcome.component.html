@@ -1,0 +1,25 @@
+<div class="welcome-page">
+  <div class="welcome-container">
+    <div class="hero-section">
+      <div class="logo-container">
+        <span class="logo-icon">🏒</span>
+      </div>
+      <h1>JINEN</h1>
+      <p class="tagline">Trouvez la garderie idéale pour votre enfant</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let feature of features">
+        <span class="feature-icon">{{ feature.icon }}</span>
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.description }}</p>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <a routerLink="/auth" class="btn btn-primary cta-btn">
+        Commencer →
+      </a>
+    </div>
+  </div>
+</div>

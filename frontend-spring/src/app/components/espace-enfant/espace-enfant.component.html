@@ -1,0 +1,92 @@
+<div class="page">
+  <div class="page-header">
+    <button class="back-btn" (click)="goBack()">← Retour</button>
+    <div class="child-hero">
+      <div class="child-avatar">{{ childName.charAt(0).toUpperCase() }}</div>
+      <div class="child-info">
+        <h1>{{ childName }}</h1>
+        <p *ngIf="childAge">{{ childAge }} ans</p>
+        <span class="badge" [class.nursery]="isNursery" [class.parent]="isParent">
+          {{ isNursery ? '🏫 Vue Éducateur' : '👪 Vue Parent' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+
+    <ng-container *ngIf="!isLoading">
+
+      <!-- Quick Actions -->
+      <div class="actions-grid">
+
+        <!-- Nursery: Write observation -->
+        <div class="action-card primary" *ngIf="isNursery" (click)="openDailyLog()">
+          <div class="action-icon">📝</div>
+          <h3>Nouvelle Observation</h3>
+          <p>Enregistrer les notes du jour</p>
+        </div>
+
+        <!-- Parent: View Daily Story -->
+        <div class="action-card primary" *ngIf="isParent" (click)="openDailyStory()">
+          <div class="action-icon">📖</div>
+          <h3>Journal du Jour</h3>
+          <p>Voir le résumé et l'historique</p>
+        </div>
+
+        <!-- Chatbot: Ask about the child -->
+        <div class="action-card chat-card" (click)="openChat()">
+          <div class="action-icon">🤖</div>
+          <h3>Assistant Intelligent</h3>
+          <p>Posez des questions sur votre enfant</p>
+        </div>
+
+        <!-- Common: Today's snapshot card -->
+        <div class="action-card snapshot" *ngIf="todayLog">
+          <div class="action-icon">📊</div>
+          <h3>Pouls d'aujourd'hui</h3>
+          <div class="mini-stats">
+            <span>{{ getMoodEmoji(todayLog.mood) }} Humeur {{ todayLog.mood }}/5</span>
+            <span>🍽️ Appétit {{ todayLog.appetite }}/5</span>
+            <span>⚡ Énergie {{ todayLog.energy }}/5</span>
+          </div>
+        </div>
+
+        <div class="action-card snapshot" *ngIf="!todayLog">
+          <div class="action-icon">⏳</div>
+          <h3>Pas encore d'observation</h3>
+          <p *ngIf="isNursery">Enregistrez la première observation de la journée</p>
+          <p *ngIf="isParent">Les éducateurs n'ont pas encore rempli l'observation du jour</p>
+        </div>
+      </div>
+
+      <!-- AI Summary preview -->
+      <div class="ai-preview" *ngIf="todayLog?.aiSummary && isParent">
+        <div class="ai-badge">✨ Résumé IA</div>
+        <p>{{ todayLog!.aiSummary }}</p>
+      </div>
+
+      <!-- Recent Logs -->
+      <div class="recent-section" *ngIf="recentLogs.length > 0">
+        <h2 class="section-title">📅 Dernières observations</h2>
+
+        <div class="recent-list">
+          <div class="recent-card" *ngFor="let log of recentLogs">
+            <div class="recent-date">{{ formatDate(log.date) }}</div>
+            <div class="recent-scores">
+              <span>{{ getMoodEmoji(log.mood) }}</span>
+              <span>🍽️ {{ log.appetite }}/5</span>
+              <span>⚡ {{ log.energy }}/5</span>
+            </div>
+            <div class="recent-tags" *ngIf="log.tags?.length">
+              <span class="mini-tag" *ngFor="let tag of log.tags.slice(0, 3)">{{ tag }}</span>
+            </div>
+            <span class="internal-badge" *ngIf="log.isInternal && isNursery">🔒</span>
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="page">
+  <div class="page-header">
+    <h1>💬 Messages</h1>
+    <p>Vos conversations</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <div class="conversation-list" *ngIf="conversations.length > 0">
+        <div class="conversation-item" *ngFor="let conv of conversations" (click)="openChat(conv.id)">
+          <div class="conv-avatar">{{ (conv.otherUserName || conv.nurseryName || 'U').charAt(0).toUpperCase() }}</div>
+          <div class="conv-info">
+            <div class="conv-header">
+              <h3>{{ conv.otherUserName || conv.nurseryName || 'Conversation' }}</h3>
+              <span class="conv-time">{{ getTimeAgo(conv.lastMessageAt) }}</span>
+            </div>
+            <p class="conv-preview">{{ conv.lastMessage || 'Aucun message' }}</p>
+          </div>
+          <span class="unread-badge" *ngIf="conv.unreadCount > 0">{{ conv.unreadCount }}</span>
+        </div>
+      </div>
+      <div class="empty-state" *ngIf="conversations.length === 0">
+        <span class="icon">💬</span>
+        <h3>Aucune conversation</h3>
+        <p>Contactez une garderie pour démarrer une conversation</p>
+      </div>
+    </ng-container>
+  </div>
+</div>

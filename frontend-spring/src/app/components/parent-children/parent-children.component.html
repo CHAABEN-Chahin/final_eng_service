@@ -1,0 +1,24 @@
+<div class="page">
+  <div class="page-header">
+    <h1>👶 Mes Enfants</h1>
+    <p>Gérez les profils de vos enfants</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <div class="children-grid" *ngIf="children.length > 0">
+        <div class="child-card" *ngFor="let child of children">
+          <div class="child-avatar">{{ child.name?.charAt(0)?.toUpperCase() }}</div>
+          <h3>{{ child.name }}</h3>
+          <p>{{ child.age }} ans</p>
+          <button class="espace-btn" (click)="openEspaceEnfant(child)">📖 Espace Enfant</button>
+        </div>
+      </div>
+      <div class="empty-state" *ngIf="children.length === 0">
+        <span class="icon">👶</span>
+        <h3>Aucun enfant enregistré</h3>
+        <p>Les enfants seront ajoutés lors de l'inscription à une garderie</p>
+      </div>
+    </ng-container>
+  </div>
+</div>

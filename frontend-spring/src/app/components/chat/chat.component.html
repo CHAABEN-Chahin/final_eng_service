@@ -1,0 +1,35 @@
+<div class="chat-page">
+  <div class="chat-header">
+    <button class="back-btn" (click)="goBack()">← Retour</button>
+    <h2>💬 Conversation</h2>
+  </div>
+
+  <div class="messages-container" #messagesContainer>
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+
+    <div class="messages-list" *ngIf="!isLoading">
+      <div class="empty-state" *ngIf="messages.length === 0">
+        <p>Aucun message. Commencez la conversation !</p>
+      </div>
+
+      <div *ngFor="let message of messages"
+           class="message-bubble"
+           [class.sent]="isMyMessage(message)"
+           [class.received]="!isMyMessage(message)">
+        <p class="message-text">{{ message.content }}</p>
+        <span class="message-time">
+          {{ message.sentAt | date:'HH:mm' }}
+          <span *ngIf="isMyMessage(message) && message.isRead" class="read-indicator">✓✓</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" [(ngModel)]="newMessage" placeholder="Écrire un message..."
+           (keyup.enter)="sendMessage()">
+    <button class="send-btn" (click)="sendMessage()" [disabled]="!newMessage.trim()">
+      ➤
+    </button>
+  </div>
+</div>

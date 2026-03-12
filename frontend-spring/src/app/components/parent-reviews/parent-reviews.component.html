@@ -1,0 +1,53 @@
+<div class="page">
+  <div class="page-header">
+    <h1>⭐ Avis</h1>
+    <p>Laissez vos avis sur les garderies</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <div class="nursery-list" *ngIf="nurseries.length > 0">
+        <div class="nursery-review-card" *ngFor="let nursery of nurseries">
+          <div class="nursery-info">
+            <h3>{{ nursery.name || nursery.nursery_name }}</h3>
+            <p>{{ nursery.address }}</p>
+          </div>
+          <button class="btn btn-primary btn-sm" (click)="openReviewModal(nursery)">
+            ✍️ Laisser un avis
+          </button>
+        </div>
+      </div>
+      <div class="empty-state" *ngIf="nurseries.length === 0">
+        <span class="icon">⭐</span>
+        <h3>Aucune garderie à évaluer</h3>
+        <p>Inscrivez votre enfant à une garderie pour pouvoir laisser un avis</p>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal-overlay" *ngIf="showReviewModal" (click)="closeReviewModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Laisser un avis</h2>
+        <button class="close-btn" (click)="closeReviewModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <h3>{{ selectedNursery?.name || selectedNursery?.nursery_name }}</h3>
+        <div class="rating-selector">
+          <span *ngFor="let star of getStars(5)"
+                class="star-btn"
+                [class.active]="star <= reviewRating"
+                (click)="setRating(star)">★</span>
+        </div>
+        <div class="form-group">
+          <label>Commentaire</label>
+          <textarea [(ngModel)]="reviewComment" placeholder="Partagez votre expérience..." rows="4"></textarea>
+        </div>
+        <button class="btn btn-primary submit-btn" (click)="submitReview()" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Envoi...' : 'Envoyer l\'avis' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="setup-page">
+  <div class="setup-container">
+    <div class="setup-header">
+      <span class="icon">🏢</span>
+      <h1>Créer votre garderie</h1>
+      <p>Remplissez les informations de votre garderie</p>
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">⚠️ {{ errorMessage }}</div>
+
+    <form (ngSubmit)="onSubmit()" class="setup-form">
+      <div class="form-section">
+        <h3>Informations générales</h3>
+        <div class="form-group">
+          <label>Nom de la garderie *</label>
+          <input type="text" [(ngModel)]="nurseryName" name="nurseryName" placeholder="Ex: Garderie Les Petits Anges" required>
+        </div>
+        <div class="form-group">
+          <label>Adresse *</label>
+          <input type="text" [(ngModel)]="address" name="address" placeholder="Adresse complète" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ville *</label>
+            <input type="text" [(ngModel)]="city" name="city" placeholder="Ville" required>
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" [(ngModel)]="phone" name="phone" placeholder="+216 XX XXX XXX">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="email" name="email" placeholder="contact@garderie.tn">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="description" name="description" placeholder="Décrivez votre garderie..." rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Détails</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prix mensuel (DT)</label>
+            <input type="number" [(ngModel)]="pricePerMonth" name="pricePerMonth" placeholder="350">
+          </div>
+          <div class="form-group">
+            <label>Nombre de places</label>
+            <input type="number" [(ngModel)]="totalSpots" name="totalSpots" placeholder="20">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tranche d'âge</label>
+            <input type="text" [(ngModel)]="ageRange" name="ageRange" placeholder="0-5 ans">
+          </div>
+          <div class="form-group">
+            <label>Horaires</label>
+            <input type="text" [(ngModel)]="hours" name="hours" placeholder="08:00 - 18:00">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Équipements (séparés par virgule)</label>
+          <input type="text" [(ngModel)]="facilities" name="facilities" placeholder="Piscine, Aire de jeux, Jardin">
+        </div>
+        <div class="form-group">
+          <label>Activités (séparées par virgule)</label>
+          <input type="text" [(ngModel)]="activities" name="activities" placeholder="Dessin, Sport, Musique">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary submit-btn" [disabled]="isLoading">
+        {{ isLoading ? 'Création...' : 'Créer la garderie' }}
+      </button>
+    </form>
+  </div>
+</div>

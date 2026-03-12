@@ -1,0 +1,54 @@
+<div class="page">
+  <div class="page-header">
+    <div class="header-flex">
+      <div>
+        <h1>📅 Programme Quotidien</h1>
+        <p>Gérez le programme de votre garderie</p>
+      </div>
+      <button class="btn btn-primary" (click)="showAddForm = !showAddForm">
+        {{ showAddForm ? '✕ Annuler' : '+ Ajouter' }}
+      </button>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="add-form card" *ngIf="showAddForm">
+      <h3>Nouvelle activité</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Horaire</label>
+          <input type="text" [(ngModel)]="newTimeSlot" placeholder="Ex: 09:00 - 10:00">
+        </div>
+        <div class="form-group">
+          <label>Activité</label>
+          <input type="text" [(ngModel)]="newActivity" placeholder="Ex: Dessin">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="newDescription" placeholder="Description de l'activité..." rows="2"></textarea>
+      </div>
+      <button class="btn btn-primary" (click)="addScheduleItem()">Ajouter au programme</button>
+    </div>
+
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <div class="schedule-list" *ngIf="schedule.length > 0">
+        <div class="schedule-item" *ngFor="let item of schedule">
+          <div class="schedule-info">
+            <span class="time">{{ item.timeSlot || item.time_slot || item.heure }}</span>
+            <div>
+              <h4>{{ item.activityName || item.activity || item.activite }}</h4>
+              <p *ngIf="item.description">{{ item.description }}</p>
+            </div>
+          </div>
+          <button class="btn btn-danger btn-sm" (click)="deleteScheduleItem(item.id)">🗑️</button>
+        </div>
+      </div>
+      <div class="empty-state" *ngIf="schedule.length === 0">
+        <span class="icon">📅</span>
+        <h3>Aucun programme</h3>
+        <p>Ajoutez des activités au programme quotidien</p>
+      </div>
+    </ng-container>
+  </div>
+</div>

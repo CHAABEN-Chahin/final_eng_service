@@ -1,0 +1,50 @@
+<div class="page">
+  <div class="page-header">
+    <h1>📊 Performance & Avis</h1>
+    <p>Consultez les avis et votre performance</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <!-- Rating Overview -->
+      <div class="rating-overview card">
+        <div class="rating-summary">
+          <div class="rating-big">
+            <span class="rating-number">{{ averageRating | number:'1.1-1' }}</span>
+            <span class="rating-stars star">{{ getStars(averageRating) }}</span>
+            <span class="rating-count">{{ reviews.length }} avis</span>
+          </div>
+          <div class="rating-bars">
+            <div class="rating-bar" *ngFor="let star of [5, 4, 3, 2, 1]">
+              <span class="bar-label">{{ star }} ★</span>
+              <div class="bar-track">
+                <div class="bar-fill" [style.width.%]="getPercentage(ratingDistribution[star])"></div>
+              </div>
+              <span class="bar-count">{{ ratingDistribution[star] }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews List -->
+      <h2 class="section-title">Tous les avis</h2>
+      <div class="reviews-list" *ngIf="reviews.length > 0">
+        <div class="review-card" *ngFor="let review of reviews">
+          <div class="review-header">
+            <div class="review-author-avatar">{{ (review.parentName || 'P').charAt(0) }}</div>
+            <div>
+              <h4>{{ review.parentName }}</h4>
+              <span class="star">{{ getStars(review.rating) }}</span>
+            </div>
+            <span class="review-date">{{ review.date }}</span>
+          </div>
+          <p class="review-comment">{{ review.comment }}</p>
+        </div>
+      </div>
+      <div class="empty-state" *ngIf="reviews.length === 0">
+        <span class="icon">⭐</span>
+        <h3>Aucun avis</h3>
+      </div>
+    </ng-container>
+  </div>
+</div>

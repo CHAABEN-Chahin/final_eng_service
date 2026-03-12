@@ -1,0 +1,94 @@
+<div class="sidebar-overlay" *ngIf="mobileMenuOpen" (click)="toggleMobileMenu()"></div>
+
+<button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+  ☰
+</button>
+
+<nav class="sidebar" [class.open]="mobileMenuOpen">
+  <div class="sidebar-header">
+    <div class="logo">
+      <span class="logo-icon">🏒</span>
+      <h2>JINEN</h2>
+    </div>
+    <p class="subtitle">Gestion de Garderie</p>
+  </div>
+
+  <div class="user-info">
+    <div class="avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+    <div class="user-details">
+      <span class="user-name">{{ userName }}</span>
+      <span class="user-role">{{ isParent ? 'Parent' : 'Propriétaire' }}</span>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-label">Navigation</span>
+
+    <!-- Parent Navigation -->
+    <ng-container *ngIf="isParent">
+      <a routerLink="/parent/dashboard" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">🏠</span> Tableau de bord
+      </a>
+      <a routerLink="/search" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">🔍</span> Chercher une garderie
+      </a>
+      <a routerLink="/parent/children" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">👶</span> Mes Enfants
+      </a>
+      <a routerLink="/parent/enrollments" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">📋</span> Mes Inscriptions
+      </a>
+      <a routerLink="/parent/payments" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">💳</span> Paiements
+      </a>
+      <a routerLink="/parent/reviews" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">⭐</span> Avis
+      </a>
+    </ng-container>
+
+    <!-- Nursery Navigation -->
+    <ng-container *ngIf="isNursery">
+      <a routerLink="/nursery/dashboard" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">🏠</span> Tableau de bord
+      </a>
+      <a routerLink="/nursery/manage-enrolled" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">📋</span> Inscriptions
+      </a>
+      <a routerLink="/nursery/children-list" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">👶</span> Enfants Inscrits
+      </a>
+      <a routerLink="/nursery/program" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">📅</span> Programme
+      </a>
+      <a routerLink="/nursery/performance" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">📊</span> Performance
+      </a>
+      <a routerLink="/nursery/statistics" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">📈</span> Statistiques
+      </a>
+      <a routerLink="/nursery/financial" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">💰</span> Finances
+      </a>
+      <a routerLink="/nursery/settings" routerLinkActive="active" (click)="mobileMenuOpen = false">
+        <span class="nav-icon">⚙️</span> Paramètres
+      </a>
+    </ng-container>
+  </div>
+
+  <div class="nav-section">
+    <span class="nav-label">Communication</span>
+    <a routerLink="/chat" routerLinkActive="active" (click)="mobileMenuOpen = false">
+      <span class="nav-icon">💬</span> Messages
+    </a>
+    <a routerLink="/notifications" routerLinkActive="active" (click)="mobileMenuOpen = false">
+      <span class="nav-icon">🔔</span> Notifications
+      <span class="notif-badge" *ngIf="unreadNotifications > 0">{{ unreadNotifications }}</span>
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    <button class="logout-btn" (click)="logout()">
+      <span>🚪</span> Déconnexion
+    </button>
+  </div>
+</nav>

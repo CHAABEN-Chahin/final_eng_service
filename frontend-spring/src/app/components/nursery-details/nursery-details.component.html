@@ -1,0 +1,125 @@
+<div class="details-page">
+  <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+
+  <ng-container *ngIf="!isLoading && nursery">
+    <!-- Hero Header -->
+    <div class="hero-header">
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <button class="back-btn" (click)="goBack()">← Retour</button>
+          <div class="hero-info">
+            <h1>{{ nursery.name }}</h1>
+            <p class="hero-address">📍 {{ nursery.address }}{{ nursery.city ? ', ' + nursery.city : '' }}</p>
+            <div class="hero-rating">
+              <span class="star">{{ getStars(nursery.rating) }}</span>
+              <span>({{ nursery.reviewCount }} avis)</span>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <button class="icon-btn" (click)="toggleFavorite()" [class.active]="isFavorite">
+              {{ isFavorite ? '❤️' : '🤍' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-content">
+      <!-- Key Info Cards -->
+      <div class="info-cards">
+        <div class="info-card">
+          <span class="info-icon">💰</span>
+          <span class="info-value">{{ nursery.price }} DT</span>
+          <span class="info-label">par mois</span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">👶</span>
+          <span class="info-value">{{ nursery.availableSpots }}/{{ nursery.totalSpots }}</span>
+          <span class="info-label">Places disponibles</span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">🕐</span>
+          <span class="info-value">{{ nursery.hours }}</span>
+          <span class="info-label">Horaires</span>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">👥</span>
+          <span class="info-value">{{ nursery.staff }}</span>
+          <span class="info-label">Personnel</span>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="section card" *ngIf="nursery.description">
+        <h3>📝 Description</h3>
+        <p>{{ nursery.description }}</p>
+      </div>
+
+      <!-- Details -->
+      <div class="section card">
+        <h3>ℹ️ Informations</h3>
+        <div class="detail-rows">
+          <div class="detail-row">
+            <span class="label">Tranche d'âge</span>
+            <span class="value">{{ nursery.ageRange }}</span>
+          </div>
+          <div class="detail-row" *ngIf="nursery.phone">
+            <span class="label">Téléphone</span>
+            <span class="value">{{ nursery.phone }}</span>
+          </div>
+          <div class="detail-row" *ngIf="nursery.email">
+            <span class="label">Email</span>
+            <span class="value">{{ nursery.email }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activities -->
+      <div class="section card" *ngIf="nursery.activities && nursery.activities.length > 0">
+        <h3>🎨 Activités</h3>
+        <div class="tags">
+          <span class="tag" *ngFor="let activity of nursery.activities">{{ activity }}</span>
+        </div>
+      </div>
+
+      <!-- Facilities -->
+      <div class="section card" *ngIf="nursery.facilities && nursery.facilities.length > 0">
+        <h3>🏗️ Équipements</h3>
+        <div class="tags">
+          <span class="tag facility" *ngFor="let facility of nursery.facilities">{{ facility }}</span>
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div class="section">
+        <h3>⭐ Avis ({{ reviews.length }})</h3>
+        <div class="reviews-list" *ngIf="reviews.length > 0">
+          <div class="review-card" *ngFor="let review of reviews">
+            <div class="review-header">
+              <div class="review-avatar">{{ review.parentName.charAt(0) }}</div>
+              <div>
+                <span class="review-name">{{ review.parentName }}</span>
+                <span class="star">{{ getStars(review.rating) }}</span>
+              </div>
+              <span class="review-date">{{ review.date }}</span>
+            </div>
+            <p class="review-text">{{ review.comment }}</p>
+          </div>
+        </div>
+        <div class="empty-state small" *ngIf="reviews.length === 0">
+          <p>Aucun avis pour le moment</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="btn btn-primary action-btn" (click)="enrollChild()" *ngIf="nursery.availableSpots > 0">
+          📋 Inscrire mon enfant
+        </button>
+        <button class="btn btn-outline action-btn" (click)="contactNursery()">
+          💬 Contacter la garderie
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>

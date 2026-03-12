@@ -1,0 +1,41 @@
+<div class="page">
+  <div class="page-header">
+    <h1>📋 Gestion des Inscriptions</h1>
+    <p>Gérez les demandes d'inscription</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <div class="tabs">
+        <button [class.active]="activeTab === 'pending'" (click)="activeTab = 'pending'">En attente</button>
+        <button [class.active]="activeTab === 'accepted'" (click)="activeTab = 'accepted'">Acceptées</button>
+        <button [class.active]="activeTab === 'rejected'" (click)="activeTab = 'rejected'">Refusées</button>
+        <button [class.active]="activeTab === 'all'" (click)="activeTab = 'all'">Toutes</button>
+      </div>
+
+      <div class="enrollment-list" *ngIf="filteredEnrollments.length > 0">
+        <div class="enrollment-card" *ngFor="let enrollment of filteredEnrollments">
+          <div class="enrollment-info">
+            <div class="enrollment-header">
+              <h3>{{ enrollment.childName || enrollment.child_name }}</h3>
+              <span class="badge" [ngClass]="getStatusBadge(enrollment.status)">{{ getStatusLabel(enrollment.status) }}</span>
+            </div>
+            <p>👨‍👩‍👧 Parent: {{ enrollment.parentName || enrollment.parent_name }}</p>
+            <p>📞 Tél: {{ enrollment.parentPhone || enrollment.parent_phone || 'N/A' }}</p>
+            <p>📅 Début: {{ enrollment.startDate || enrollment.start_date }}</p>
+            <p *ngIf="enrollment.medicalNotes || enrollment.medical_notes">🏥 Notes: {{ enrollment.medicalNotes || enrollment.medical_notes }}</p>
+          </div>
+          <div class="enrollment-actions" *ngIf="enrollment.status === 'pending'">
+            <button class="btn btn-success btn-sm" (click)="acceptEnrollment(enrollment.id)">✓ Accepter</button>
+            <button class="btn btn-danger btn-sm" (click)="rejectEnrollment(enrollment.id)">✕ Refuser</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="filteredEnrollments.length === 0">
+        <span class="icon">📋</span>
+        <h3>Aucune inscription {{ activeTab !== 'all' ? getStatusLabel(activeTab).toLowerCase() : '' }}</h3>
+      </div>
+    </ng-container>
+  </div>
+</div>

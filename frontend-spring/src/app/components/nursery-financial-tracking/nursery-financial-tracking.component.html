@@ -1,0 +1,56 @@
+<div class="page">
+  <div class="page-header">
+    <h1>💰 Suivi Financier</h1>
+    <p>Consultez les finances de votre garderie</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <div class="finance-stats">
+        <div class="stat-card revenue">
+          <span class="stat-icon">💰</span>
+          <span class="stat-value">{{ formatAmount(stats.totalRevenue || 0) }}</span>
+          <span class="stat-label">Revenu total</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">⏳</span>
+          <span class="stat-value">{{ formatAmount(stats.pendingPayments || 0) }}</span>
+          <span class="stat-label">Paiements en attente</span>
+        </div>
+        <div class="stat-card success">
+          <span class="stat-icon">✅</span>
+          <span class="stat-value">{{ stats.completedPayments || 0 }}</span>
+          <span class="stat-label">Paiements complétés</span>
+        </div>
+      </div>
+
+      <h2 class="section-title">Historique des paiements</h2>
+      <div class="payments-table" *ngIf="payments.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Parent</th>
+              <th>Enfant</th>
+              <th>Montant</th>
+              <th>Statut</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payment of payments">
+              <td>{{ payment.parentName || 'N/A' }}</td>
+              <td>{{ payment.childName || 'N/A' }}</td>
+              <td class="amount">{{ formatAmount(payment.amount) }}</td>
+              <td><span class="badge" [ngClass]="getStatusBadge(payment.status)">{{ getStatusLabel(payment.status) }}</span></td>
+              <td>{{ payment.paymentDate || '' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="empty-state" *ngIf="payments.length === 0">
+        <span class="icon">💰</span>
+        <h3>Aucun paiement</h3>
+      </div>
+    </ng-container>
+  </div>
+</div>

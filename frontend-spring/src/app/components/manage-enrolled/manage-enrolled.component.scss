@@ -1,0 +1,44 @@
+.page { min-height: 100vh; background: #f8fafc; }
+
+.tabs {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 24px;
+  button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    &.active { background: white; color: #059669; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+  }
+}
+
+.enrollment-list { display: grid; gap: 12px; }
+
+.enrollment-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .enrollment-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    h3 { font-size: 16px; font-weight: 600; }
+  }
+
+  .enrollment-info p { font-size: 13px; color: #6b7280; margin-bottom: 4px; }
+  .enrollment-actions { display: flex; gap: 8px; .btn-sm { padding: 8px 14px; font-size: 12px; } }
+}

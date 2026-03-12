@@ -1,0 +1,122 @@
+<div class="dashboard">
+  <div class="page-header">
+    <div class="header-content">
+      <div>
+        <h1>Bonjour, {{ userName }} ! 🏢</h1>
+        <p>{{ nursery?.name || 'Votre garderie' }} — Tableau de bord</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+
+    <ng-container *ngIf="!isLoading">
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👶</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ stats.total_enrolled || stats.totalEnrolled || stats.activeEnrollments || 0 }}</span>
+            <span class="stat-label">Enfants inscrits</span>
+          </div>
+        </div>
+        <div class="stat-card pending">
+          <div class="stat-icon">📋</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ pendingEnrollments.length }}</span>
+            <span class="stat-label">En attente</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ (stats.average_rating || stats.averageRating || 0) | number:'1.1-1' }}</span>
+            <span class="stat-label">Note moyenne</span>
+          </div>
+        </div>
+        <div class="stat-card revenue">
+          <div class="stat-icon">💰</div>
+          <div class="stat-info">
+            <span class="stat-value">{{ (stats.total_revenue || stats.totalRevenue || 0) | number:'1.0-0' }} DT</span>
+            <span class="stat-label">Revenu total</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <button class="action-card" (click)="navigateTo('/nursery/manage-enrolled')">
+          <span class="action-icon">📋</span><span>Inscriptions</span>
+        </button>
+        <button class="action-card" (click)="navigateTo('/nursery/children-list')">
+          <span class="action-icon">👶</span><span>Enfants</span>
+        </button>
+        <button class="action-card" (click)="navigateTo('/nursery/program')">
+          <span class="action-icon">📅</span><span>Programme</span>
+        </button>
+        <button class="action-card" (click)="navigateTo('/nursery/performance')">
+          <span class="action-icon">📊</span><span>Performance</span>
+        </button>
+        <button class="action-card" (click)="navigateTo('/nursery/statistics')">
+          <span class="action-icon">📈</span><span>Statistiques</span>
+        </button>
+        <button class="action-card" (click)="navigateTo('/nursery/financial')">
+          <span class="action-icon">💰</span><span>Finances</span>
+        </button>
+        <button class="action-card" (click)="navigateTo('/nursery/settings')">
+          <span class="action-icon">⚙️</span><span>Paramètres</span>
+        </button>
+        <button class="action-card" (click)="navigateTo('/chat')">
+          <span class="action-icon">💬</span><span>Messages</span>
+        </button>
+      </div>
+
+      <!-- Pending Enrollments -->
+      <div class="section" *ngIf="pendingEnrollments.length > 0">
+        <h2 class="section-title">📋 Inscriptions en attente</h2>
+        <div class="enrollment-list">
+          <div class="enrollment-card" *ngFor="let enrollment of pendingEnrollments">
+            <div class="enrollment-info">
+              <h3>{{ enrollment.childName || enrollment.child_name }}</h3>
+              <p>Parent: {{ enrollment.parentName || enrollment.parent_name }}</p>
+              <p>Date: {{ enrollment.startDate || enrollment.start_date }}</p>
+            </div>
+            <div class="enrollment-actions">
+              <button class="btn btn-success btn-sm" (click)="acceptEnrollment(enrollment.id)">✓ Accepter</button>
+              <button class="btn btn-danger btn-sm" (click)="rejectEnrollment(enrollment.id)">✕ Refuser</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Schedule -->
+      <div class="section" *ngIf="schedule.length > 0">
+        <h2 class="section-title">📅 Programme du jour</h2>
+        <div class="schedule-list">
+          <div class="schedule-item" *ngFor="let item of schedule">
+            <span class="schedule-time">{{ item.timeSlot || item.time_slot || item.heure }}</span>
+            <span class="schedule-activity">{{ item.activityName || item.activity || item.activite }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Reviews -->
+      <div class="section" *ngIf="stats?.recentReviews && stats.recentReviews.length > 0">
+        <h2 class="section-title">⭐ Avis Récents</h2>
+        <div class="reviews-list">
+          <div class="review-card" *ngFor="let review of stats.recentReviews">
+            <div class="review-header">
+              <span class="review-author">{{ review.parent_name || review.parentName }}</span>
+              <span class="review-rating">
+                <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= review.rating">⭐</span>
+              </span>
+            </div>
+            <p class="review-comment">{{ review.comment }}</p>
+            <span class="review-date">{{ review.created_at || review.createdAt | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

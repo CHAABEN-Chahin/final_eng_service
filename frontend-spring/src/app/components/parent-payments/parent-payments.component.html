@@ -1,0 +1,97 @@
+<div class="page">
+  <div class="page-header">
+    <h1>💳 Paiements</h1>
+    <p>Gérez vos paiements</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+
+    <ng-container *ngIf="!isLoading">
+      <div class="tabs">
+        <button [class.active]="activeTab === 'pending'" (click)="activeTab = 'pending'">En attente</button>
+        <button [class.active]="activeTab === 'history'" (click)="activeTab = 'history'">Historique</button>
+      </div>
+
+      <div *ngIf="activeTab === 'pending'">
+        <div class="payment-list" *ngIf="payments.length > 0">
+          <div class="payment-card" *ngFor="let payment of payments">
+            <div class="payment-info">
+              <h3>{{ payment.nurseryName || payment.nursery_name || 'Garderie' }}</h3>
+              <p>Enfant: {{ payment.childName || payment.child_name || '' }}</p>
+              <p>{{ payment.description || '' }}</p>
+            </div>
+            <div class="payment-amount">
+              <span class="amount">{{ formatAmount(payment.amount) }}</span>
+              <span class="badge" [ngClass]="getStatusBadge(payment.paymentStatus || payment.status)">{{ getStatusLabel(payment.paymentStatus || payment.status) }}</span>
+              <button class="btn btn-primary btn-sm" *ngIf="(payment.paymentStatus || payment.status) !== 'paid'" (click)="openPaymentModal(payment)">
+                Payer
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="empty-state" *ngIf="payments.length === 0">
+          <span class="icon">💳</span>
+          <h3>Aucun paiement en attente</h3>
+        </div>
+      </div>
+
+      <div *ngIf="activeTab === 'history'">
+        <div class="payment-list" *ngIf="paymentHistory.length > 0">
+          <div class="payment-card" *ngFor="let payment of paymentHistory">
+            <div class="payment-info">
+              <h3>{{ payment.nurseryName || payment.nursery_name || 'Garderie' }}</h3>
+              <p>Payé le: {{ payment.paymentDate || payment.paidAt || payment.paid_at }}</p>
+            </div>
+            <div class="payment-amount">
+              <span class="amount">{{ formatAmount(payment.amount) }}</span>
+              <span class="badge badge-success">Payé</span>
+            </div>
+          </div>
+        </div>
+        <div class="empty-state" *ngIf="paymentHistory.length === 0">
+          <span class="icon">📋</span>
+          <h3>Aucun historique</h3>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="modal-overlay" *ngIf="showPaymentModal" (click)="closePaymentModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Paiement</h2>
+        <button class="close-btn" (click)="closePaymentModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="payment-summary">
+          <p><strong>Montant:</strong> {{ formatAmount(selectedPayment?.amount || 0) }}</p>
+        </div>
+        <div class="error-message" *ngIf="paymentError">⚠️ {{ paymentError }}</div>
+        <form (ngSubmit)="processPayment()">
+          <div class="form-group">
+            <label>Nom du titulaire</label>
+            <input type="text" [(ngModel)]="cardholderName" name="cardholderName" placeholder="Nom sur la carte" required>
+          </div>
+          <div class="form-group">
+            <label>Numéro de carte</label>
+            <input type="text" [(ngModel)]="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" required maxlength="19">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Expiration</label>
+              <input type="text" [(ngModel)]="expiryDate" name="expiryDate" placeholder="MM/YY" required maxlength="5">
+            </div>
+            <div class="form-group">
+              <label>CVV</label>
+              <input type="text" [(ngModel)]="cvv" name="cvv" placeholder="123" required maxlength="4">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary submit-btn" [disabled]="isProcessing">
+            {{ isProcessing ? 'Traitement...' : 'Payer ' + formatAmount(selectedPayment?.amount || 0) }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

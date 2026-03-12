@@ -1,0 +1,125 @@
+<div class="page">
+  <div class="page-header">
+    <button class="back-btn" (click)="goBack()">← Retour</button>
+    <h1>📝 Observation du jour</h1>
+    <p>{{ childName }} — {{ date }}</p>
+  </div>
+
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+
+    <ng-container *ngIf="!isLoading">
+      <!-- Success message -->
+      <div class="alert alert-success" *ngIf="saveSuccess">
+        ✅ Observation enregistrée avec succès ! Le résumé IA sera généré sous peu.
+      </div>
+
+      <!-- Error message -->
+      <div class="alert alert-error" *ngIf="saveError">
+        ❌ {{ saveError }}
+      </div>
+
+      <!-- Quick-Log Form -->
+      <div class="log-form">
+
+        <!-- PULSE SECTION -->
+        <div class="form-section">
+          <h2 class="section-title">🫀 Pouls de la journée</h2>
+          <p class="section-desc">Évaluez l'état général de l'enfant</p>
+
+          <div class="pulse-grid">
+            <div class="pulse-item" *ngFor="let field of pulseFields">
+              <label class="pulse-label">{{ field.icon }} {{ field.label }}</label>
+              <div class="word-slider">
+                <button *ngFor="let i of [1,2,3,4,5]"
+                        class="word-btn"
+                        [class.active]="scores[field.key] === i"
+                        [class.low]="i <= 2"
+                        [class.mid]="i === 3"
+                        [class.high]="i >= 4"
+                        (click)="setScore(field.key, i)">
+                  {{ getLabel(field.key, i - 1) }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAG CLOUD SECTION -->
+        <div class="form-section">
+          <h2 class="section-title">🏷️ Tags d'activité</h2>
+          <p class="section-desc">Sélectionnez les comportements observés</p>
+
+          <div class="tag-cloud">
+            <button *ngFor="let tag of availableTags"
+                    class="tag-btn"
+                    [class.selected]="isTagSelected(tag.key)"
+                    (click)="toggleTag(tag.key)">
+              <span class="tag-emoji">{{ tag.emoji }}</span>
+              <span class="tag-label">{{ tag.label }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- REMARKS SECTION -->
+        <div class="form-section">
+          <h2 class="section-title">💬 Remarques</h2>
+          <p class="section-desc">Anecdotes ou observations spécifiques</p>
+
+          <textarea class="remarks-input"
+                    [(ngModel)]="remarks"
+                    placeholder="Ex: Aujourd'hui, il a aidé un camarade à construire une tour de blocs..."
+                    rows="4"></textarea>
+        </div>
+
+        <!-- INTERNAL TOGGLE -->
+        <div class="form-section internal-section">
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <h3>🔒 Réservé au personnel</h3>
+              <p>Cette note ne sera pas visible par les parents</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" [(ngModel)]="isInternal">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <button class="submit-btn"
+                [disabled]="isSaving"
+                (click)="submitLog()">
+          <span *ngIf="!isSaving">📤 Enregistrer l'observation</span>
+          <span *ngIf="isSaving">⏳ Enregistrement...</span>
+        </button>
+      </div>
+
+      <!-- Today's existing logs -->
+      <div class="existing-logs" *ngIf="existingLogs.length > 0">
+        <h2 class="section-title">📋 Observations d'aujourd'hui</h2>
+        <div class="log-card" *ngFor="let log of existingLogs">
+          <div class="log-header">
+            <span class="log-time">{{ log.createdAt | date:'HH:mm' }}</span>
+            <span class="log-educator">par {{ log.educatorName }}</span>
+            <span class="badge internal" *ngIf="log.isInternal">🔒 Interne</span>
+          </div>
+          <div class="log-scores">
+            <span class="score-pill">Humeur {{ log.mood }}/5</span>
+            <span class="score-pill">Appétit {{ log.appetite }}/5</span>
+            <span class="score-pill">Énergie {{ log.energy }}/5</span>
+            <span class="score-pill" *ngIf="log.sociability">Sociabilité {{ log.sociability }}/5</span>
+            <span class="score-pill" *ngIf="log.concentration">Concentration {{ log.concentration }}/5</span>
+            <span class="score-pill" *ngIf="log.autonomy">Autonomie {{ log.autonomy }}/5</span>
+            <span class="score-pill" *ngIf="log.sleep">Sommeil {{ log.sleep }}/5</span>
+            <span class="score-pill" *ngIf="log.motorSkills">Motricité {{ log.motorSkills }}/5</span>
+          </div>
+          <div class="log-tags" *ngIf="log.tags?.length">
+            <span class="mini-tag" *ngFor="let tag of log.tags">{{ tag }}</span>
+          </div>
+          <p class="log-remarks" *ngIf="log.remarks">{{ log.remarks }}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

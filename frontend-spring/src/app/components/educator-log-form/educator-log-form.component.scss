@@ -1,0 +1,361 @@
+.page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.page-header {
+  padding: 24px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: #059669;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 8px;
+    font-weight: 600;
+
+    &:hover { text-decoration: underline; }
+  }
+
+  h1 { font-size: 24px; color: #1e293b; margin-bottom: 4px; }
+  p { color: #6b7280; font-size: 14px; }
+}
+
+.page-content {
+  padding: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.alert {
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 500;
+
+  &.alert-success {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+  &.alert-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+}
+
+.log-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-section {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+  }
+
+  .section-desc {
+    font-size: 13px;
+    color: #9ca3af;
+    margin-bottom: 16px;
+  }
+}
+
+// Pulse Grid
+.pulse-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pulse-item {
+  .pulse-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+.word-slider {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+
+  .word-btn {
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 2px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: #0891b2;
+      background: #f0fdfa;
+      transform: scale(1.03);
+    }
+
+    &.active.low {
+      border-color: #f59e0b;
+      background: #fffbeb;
+      color: #92400e;
+      font-weight: 700;
+      box-shadow: 0 0 0 1px #f59e0b;
+    }
+
+    &.active.mid {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      color: #1e40af;
+      font-weight: 700;
+      box-shadow: 0 0 0 1px #3b82f6;
+    }
+
+    &.active.high {
+      border-color: #059669;
+      background: #ecfdf5;
+      color: #065f46;
+      font-weight: 700;
+      box-shadow: 0 0 0 1px #059669;
+    }
+  }
+}
+
+// Tag Cloud
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+
+  .tag-emoji { font-size: 18px; }
+  .tag-label { color: #4b5563; font-weight: 500; }
+
+  &:hover {
+    border-color: #0891b2;
+    background: #f0fdfa;
+  }
+
+  &.selected {
+    border-color: #059669;
+    background: linear-gradient(135deg, #ecfdf5, #f0fdfa);
+    box-shadow: 0 0 0 1px #059669;
+
+    .tag-label { color: #065f46; font-weight: 600; }
+  }
+}
+
+// Remarks
+.remarks-input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: #059669;
+  }
+
+  &::placeholder { color: #9ca3af; }
+}
+
+// Internal Toggle
+.internal-section {
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .toggle-info {
+      h3 { font-size: 15px; color: #1e293b; margin-bottom: 2px; }
+      p { font-size: 12px; color: #9ca3af; }
+    }
+  }
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+
+  input { opacity: 0; width: 0; height: 0; }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #d1d5db;
+    border-radius: 28px;
+    transition: 0.3s;
+
+    &::before {
+      content: '';
+      position: absolute;
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+  }
+
+  input:checked + .toggle-slider {
+    background-color: #ef4444;
+  }
+
+  input:checked + .toggle-slider::before {
+    transform: translateX(24px);
+  }
+}
+
+// Submit Button
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #059669, #0891b2);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Existing Logs
+.existing-logs {
+  margin-top: 28px;
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 14px;
+  }
+}
+
+.log-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  .log-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+
+    .log-time { font-weight: 600; color: #374151; }
+    .log-educator { color: #9ca3af; }
+
+    .badge.internal {
+      background: #fef2f2;
+      color: #dc2626;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 11px;
+    }
+  }
+
+  .log-scores {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    .score-pill {
+      padding: 4px 10px;
+      background: #f0fdf4;
+      border-radius: 10px;
+      font-size: 12px;
+      color: #065f46;
+    }
+  }
+
+  .log-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+
+    .mini-tag {
+      padding: 3px 10px;
+      background: #f0f9ff;
+      color: #0369a1;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+  }
+
+  .log-remarks {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-content { padding: 14px; }
+
+  .word-slider {
+    gap: 5px;
+    .word-btn { padding: 6px 10px; font-size: 11px; }
+  }
+
+  .tag-cloud { gap: 8px; }
+  .tag-btn { padding: 8px 12px; font-size: 13px; }
+}

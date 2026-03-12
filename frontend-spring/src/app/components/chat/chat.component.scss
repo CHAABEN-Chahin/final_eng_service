@@ -1,0 +1,111 @@
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f8fafc;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover { color: #059669; }
+  }
+
+  h2 { font-size: 18px; font-weight: 600; }
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 10px 16px;
+  border-radius: 16px;
+  word-wrap: break-word;
+
+  &.sent {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #059669, #0891b2);
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+
+  &.received {
+    align-self: flex-start;
+    background: white;
+    color: #1e293b;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  .message-text { font-size: 14px; line-height: 1.4; margin-bottom: 4px; }
+
+  .message-time {
+    font-size: 11px;
+    opacity: 0.7;
+    text-align: right;
+    display: block;
+
+    .read-indicator { margin-left: 4px; }
+  }
+}
+
+.chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 16px 24px;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+
+  input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 24px;
+    font-size: 14px;
+
+    &:focus {
+      border-color: #059669;
+      box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.1);
+    }
+  }
+
+  .send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #059669, #0891b2);
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:disabled { opacity: 0.5; }
+    &:hover:not(:disabled) { opacity: 0.9; }
+  }
+}

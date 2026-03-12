@@ -1,0 +1,41 @@
+.page { min-height: 100vh; background: #f8fafc; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  .stat-icon { font-size: 32px; display: block; margin-bottom: 8px; }
+  .stat-value { display: block; font-size: 28px; font-weight: 700; color: #1e293b; }
+  .stat-label { display: block; font-size: 13px; color: #6b7280; margin-top: 4px; }
+}
+
+.section {
+  margin-bottom: 24px;
+  h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+}
+
+.distribution-list { display: grid; gap: 8px; }
+
+.dist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  .dist-label { font-size: 13px; color: #6b7280; min-width: 60px; }
+  .dist-bar { flex: 1; height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; }
+  .dist-fill { height: 100%; background: linear-gradient(135deg, #059669, #0891b2); border-radius: 4px; }
+  .dist-count { font-size: 13px; font-weight: 600; min-width: 24px; text-align: right; }
+}
+
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}

@@ -1,0 +1,61 @@
+.page { min-height: 100vh; background: #f8fafc; }
+
+.finance-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  .stat-icon { font-size: 32px; display: block; margin-bottom: 8px; }
+  .stat-value { display: block; font-size: 24px; font-weight: 700; color: #1e293b; }
+  .stat-label { display: block; font-size: 13px; color: #6b7280; margin-top: 4px; }
+
+  &.revenue { border-top: 3px solid #059669; }
+  &.success { border-top: 3px solid #10b981; }
+}
+
+.section-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+
+.payments-table {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #374151;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    td {
+      border-bottom: 1px solid #f1f5f9;
+      color: #4b5563;
+    }
+
+    .amount { font-weight: 600; color: #059669; }
+  }
+}
+
+@media (max-width: 768px) {
+  .finance-stats { grid-template-columns: 1fr; }
+}

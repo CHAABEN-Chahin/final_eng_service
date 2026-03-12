@@ -1,0 +1,26 @@
+<div class="page">
+  <div class="page-header">
+    <h1>👶 Enfants Inscrits</h1>
+    <p>Liste des enfants inscrits dans votre garderie</p>
+  </div>
+  <div class="page-content">
+    <div class="loading-spinner" *ngIf="isLoading"><div class="spinner"></div></div>
+    <ng-container *ngIf="!isLoading">
+      <div class="children-grid" *ngIf="enrolledChildren.length > 0">
+        <div class="child-card" *ngFor="let child of enrolledChildren">
+          <div class="child-avatar">{{ (child.child_name || child.name || 'E').charAt(0).toUpperCase() }}</div>
+          <div class="child-info">
+            <h3>{{ child.child_name || child.name }}</h3>
+            <p>{{ child.child_age || child.age }} ans</p>
+            <p class="parent-name">Parent: {{ child.parent_name || child.parentName || 'N/A' }}</p>
+          </div>
+          <button class="espace-btn" (click)="openEspaceEnfant(child)">📖 Espace Enfant</button>
+        </div>
+      </div>
+      <div class="empty-state" *ngIf="enrolledChildren.length === 0">
+        <span class="icon">👶</span>
+        <h3>Aucun enfant inscrit</h3>
+      </div>
+    </ng-container>
+  </div>
+</div>

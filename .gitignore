@@ -1,0 +1,25 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Angular build output
+frontend-spring/dist/
+frontend-spring/.angular/
+
+# Spring Boot build output
+backend-spring/target/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment / IDE
+.DS_Store
+.env
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# Compiled class files
+*.class
