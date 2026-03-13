@@ -34,7 +34,7 @@ Full-stack nursery management application with AI-powered child psychology track
 ```
 Projet_Ing_Service/
 ├── backend-spring/              # Spring Boot REST API
-│   ├── .env                     # YOUR secrets (git-ignored)
+│   ├── .env                     # (git-ignored)
 │   ├── .env.example             # Template to copy
 │   ├── pom.xml                  # Maven dependencies
 │   ├── mvnw / mvnw.cmd          # Maven wrapper (no install needed)
