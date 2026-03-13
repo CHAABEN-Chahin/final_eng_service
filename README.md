@@ -83,7 +83,7 @@ Open `backend-spring/.env` and fill in your values:
 
 ```env
 # MongoDB Atlas connection string
-MONGODB_URI=mongodb+srv://YOUR_USER:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/nursery_db
+MONGODB_URI=mongodb+srv://chahinchaaben_db_user:jEzOOUtah5mqoDEZ@nursery-cluster.w1n6yu6.mongodb.net/nursery_db?appName=nursery-cluster
 
 # Server port
 SERVER_PORT=3000
